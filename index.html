@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-PT">
 <head>
     <meta charset="UTF-8">
-    <title>Sintaxe Geométrica</title>
+    <title></title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,700;1,400&display=swap');
@@ -225,8 +225,8 @@
             <div class="syntax-section">
                 <p><span class="hl">5. Navegação e Alinhamento:</span></p>
                 <p>Alinhamento: <code>//alinhar:esquerda</code> (ou <code>direita</code>, <code>centro</code>)</p>
-                <p><b>Scroll do Mouse:</b> Zoom (Aproximar/Afastar)</p>
-                <p><b>Botão Direito (Segurar/Arrastar):</b> Mover pelo canva</p>
+                <p><b>Scroll do Rato:</b> Zoom (Aproximar/Afastar)</p>
+                <p><b>Botão Direito (Segurar/Arrastar):</b> Mover pelo ecrã</p>
             </div>
         </div>
 
@@ -674,42 +674,43 @@ _δὲ_ (vrd)
             setTimeout(drawAllLines, 150); 
         }
 
-        // Função auxiliar para extrair o título e purificá-lo para nome de arquivo
+        // Função auxiliar para extrair o título e purificá-lo para nome de ficheiro
         function getFilename(ext) {
             let nome = document.getElementById('cabecalho-input').value.trim();
             if (!nome) nome = 'esquema_sintatico';
-            // Substitui caracteres inválidos para sistemas operacionais, preservando o alfabeto Grego
+            // Substitui caracteres inválidos, preservando o alfabeto Grego
             nome = nome.replace(/[\\/:*?"<>|]/g, '-').substring(0, 80);
             return `${nome}.${ext}`;
         }
 
- function withResetTransform(callback) {
-            // 1. Guardamos a sua perspectiva atual de trabalho
-            const oldScale = scale;
-            const oldTranslateX = translateX;
-            const oldTranslateY = translateY;
+        function exportWithCleanState(exportCallback) {
+            window.scrollTo(0, 0);
 
+            const oldScale = scale;
+            const oldX = translateX;
+            const oldY = translateY;
+
+    
             scale = 1;
             translateX = 0;
             translateY = 0;
-            updateTransform(); // Aplica rigorosamente o estado puro ao DOM
+            updateTransform();
             
-            drawAllLines(true); 
+            renderTree();
 
             setTimeout(() => {
-                callback(() => {
-                    // 5. Após a "fotografia", restauramos a ordem (Taxis) para a sua posição exata
+                exportCallback(() => {
                     scale = oldScale;
-                    translateX = oldTranslateX;
-                    translateY = oldTranslateY;
+                    translateX = oldX;
+                    translateY = oldY;
                     updateTransform();
                     drawAllLines(false);
                 });
-            }, 350);
+            }, 800);
         }
 
         function exportToPNG() {
-            withResetTransform((restore) => {
+            exportWithCleanState((restore) => {
                 html2canvas(document.getElementById('workspace'), { backgroundColor: null, scale: 2 }).then(canvas => {
                     const link = document.createElement('a');
                     link.download = getFilename('png');
@@ -721,7 +722,7 @@ _δὲ_ (vrd)
         }
 
         function exportToJPG() {
-            withResetTransform((restore) => {
+            exportWithCleanState((restore) => {
                 html2canvas(document.getElementById('workspace'), { backgroundColor: '#000000', scale: 2 }).then(canvas => {
                     const link = document.createElement('a');
                     link.download = getFilename('jpg');
