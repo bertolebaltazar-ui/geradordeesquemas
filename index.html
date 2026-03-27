@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Sintaxe Geométrica</title>
+    <title></title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,700;1,400&display=swap');
@@ -210,7 +210,7 @@
             <div class="syntax-section">
                 <p><span class="hl">3. Cores:</span></p>
                 <p><b>Nativas:</b> <code>(vrm)</code>, <code>(ama)</code>, <code>(azu)</code>, <code>(cia)</code>, <code>(rox)</code>, <code>(ros)</code>, <code>(vd)</code>, <code>(brc)</code></p>
-                <p><b>Dinâmicas:</b> <code>//cor:#HEX (sigla)</code> <br>
+                <p><b>Dinâmicas:</b> <code>cor:#HEX (sigla)</code> <br>
                 <i>Dê um duplo-clique sobre o HEX no texto para abrir a paleta.</i></p>
             </div>
 
@@ -545,8 +545,7 @@ _δὲ_ (vrd)
 
             const svg = document.getElementById('svg-layer');
             const workspaceRect = workspace.getBoundingClientRect();
-
-            // Adição de Prudentia: Forçar os atributos estritos do SVG para que o exportador não se perca.
+            
             svg.style.width = workspace.scrollWidth + 'px';
             svg.style.height = workspace.scrollHeight + 'px';
             svg.setAttribute('width', workspace.scrollWidth);
@@ -679,8 +678,7 @@ _δὲ_ (vrd)
             const oldTransform = workspace.style.transform;
             const oldWidth = workspace.style.width;
             const oldHeight = workspace.style.height;
-
-            // Congelamento material: fixa o flexbox na sua forma exata antes da cópia do exportador.
+            
             workspace.style.transform = 'none';
             workspace.style.width = workspace.scrollWidth + 'px';
             workspace.style.height = workspace.scrollHeight + 'px';
